@@ -1,0 +1,65 @@
+3. Création des tables
+
+4. Schema de la base de données
+table       EMPLOYE     EMPLOYE     2           CREATE TABLE EMPLOYE(Nom text, Salaire real, Rayon int REFERENCES RAYON(Numero) ON DELETE CASCADE, PRIMARY KEY(Nom))
+index       sqlite_aut  EMPLOYE     3                                                                                                                               
+table       RAYON       RAYON       5           CREATE TABLE RAYON(Numero int, Nom text, Chef text REFERENCES EMPLOYE(Nom) ON DELETE CASCADE, PRIMARY KEY(Numero))  
+index       sqlite_aut  RAYON       6                                                                                                                               
+table       PRODUIT     PRODUIT     7           CREATE TABLE PRODUIT(Ref int PRIMARY KEY, Nom text, Prix real, Rayon int, FOREIGN KEY (Rayon) REFERENCES RAYON(Numer
+index       sqlite_aut  PRODUIT     8                                                                                                                               
+table       FOURNISSEU  FOURNISSEU  9           CREATE TABLE FOURNISSEUR(Nom text, Adresse text, PRIMARY KEY(Nom))                                                  
+index       sqlite_aut  FOURNISSEU  10                                                                                                                              
+table       CLIENT      CLIENT      11          CREATE TABLE CLIENT(Nom text, Adresse text, Solde real, PRIMARY KEY(Nom))                                           
+index       sqlite_aut  CLIENT      12                                                                                                                              
+table       COMMANDE    COMMANDE    13          CREATE TABLE COMMANDE(Num int, Date date, Nom_client REFERENCES CLIENT(Nom) ON DELETE CASCADE, PRIMARY KEY(Num))    
+index       sqlite_aut  COMMANDE    14                                                                                                                              
+table       FOURNIR     FOURNIR     15          CREATE TABLE FOURNIR(Nom_four text REFERENCES FOURNISSEUR(Nom) ON DELETE CASCADE, Ref_prod int REFERENCES PRODUIT(Re
+table       LIGNE_COM   LIGNE_COM   4           CREATE TABLE LIGNE_COM(Num_com int REFERENCES COMMANDE(Num) ON DELETE CASCADE, Ref_prod int REFERENCES PRODUIT(Ref) 
+
+5. Insertion des données
+Table EMPLOYE
+durand      1000.0      1         
+dubois      1500.0      1         
+dupont      2000.0      1         
+dumoulin    1200.0      2         
+dutilleul   1000.0      2         
+duchene     2000.0      2         
+duguesclin  1500.0      3         
+duduche     2000.0      3         
+
+TABLE RAYON
+1           jouet       dupont    
+2           vetement    duchene   
+3           jardin      duduche   
+
+La commande de 2013
+1           2013-01-01  dupont    
+
+6. Mise à jour des données de table
+Augmentation du solde du client dumas;
+dumas       lyon        700.0     
+
+Suppression des clients n'ayant jamais passé de commande.
+
+Contenu de la table après suppression
+dupont      lyon        -200.0    
+dupond      marseille   -300.0    
+dumas       lyon        700.0     
+
+Suppression des informations liées au client dupont
+
+Contenu de la table CLIENT après la suppression
+dupond      marseille   -300.0    
+dumas       lyon        700.0     
+
+Contenu de la table COMMANDE après la suppression
+2           2014-01-05  dupond    
+4           2014-01-25  dumas     
+5           2015-01-31  dumas     
+
+7. Notion de Trigger
+Un trigger est une fonction qui est exécutée lorsque un événement spécifié se produit sur la database
+
+8. Trigger pour supprimer toutes les lignes d'une commande
+
+9. Trigger empechant insertion d'un produit avec prix négatif

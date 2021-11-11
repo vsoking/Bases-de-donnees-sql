@@ -1,3 +1,4 @@
+.mode column
 .shell echo "3. Création des tables";
 PRAGMA foreign_keys = ON;
 CREATE TABLE EMPLOYE(Nom text, Salaire real, PRIMARY KEY(Nom));
